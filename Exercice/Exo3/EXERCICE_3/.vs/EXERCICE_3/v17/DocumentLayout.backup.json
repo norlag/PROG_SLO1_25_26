@@ -1,0 +1,37 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\seb\\Documents\\git\\PROG_SLO1_25_26\\Exercice\\Exo3\\EXERCICE_3\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{8B5C63B5-19CC-4300-9703-F19D4FA1C3F3}|EXERCICE_3\\EXERCICE_3.vcxproj|C:\\Users\\seb\\Documents\\git\\PROG_SLO1_25_26\\Exercice\\Exo3\\EXERCICE_3\\EXERCICE_3\\EXERCICE_3.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{8B5C63B5-19CC-4300-9703-F19D4FA1C3F3}|EXERCICE_3\\EXERCICE_3.vcxproj|solutionrelative:EXERCICE_3\\EXERCICE_3.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "EXERCICE_3.c",
+              "DocumentMoniker": "C:\\Users\\seb\\Documents\\git\\PROG_SLO1_25_26\\Exercice\\Exo3\\EXERCICE_3\\EXERCICE_3\\EXERCICE_3.c",
+              "RelativeDocumentMoniker": "EXERCICE_3\\EXERCICE_3.c",
+              "ToolTip": "C:\\Users\\seb\\Documents\\git\\PROG_SLO1_25_26\\Exercice\\Exo3\\EXERCICE_3\\EXERCICE_3\\EXERCICE_3.c",
+              "RelativeToolTip": "EXERCICE_3\\EXERCICE_3.c",
+              "ViewState": "AgIAACQAAAAAAAAAAAAIwC8AAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
+              "WhenOpened": "2025-11-10T10:38:43.94Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
