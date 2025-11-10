@@ -15,7 +15,9 @@
 //----------------------------------------------------------------------------------//
 //-- librairie standard --// 
 #include <stdio.h>
-#include <stdint.h>
+#include <stdint.h>				// lib pour le entier normalisé 
+#include <stdbool.h>			// lib pour le type bool 
+
 
 //-- librairie perso --//  
 #include "Conversion.h"
@@ -75,7 +77,20 @@ void main()
 	uint16_t varF;		// 2 octets 
 	uint32_t varG;			// 4 octets			int = long 
 	uint64_t varH;	// 8 octets 
-					
+	
+	//-- type entier type booléen --//
+	bool varS;		// 1 octet
+
+	printf("taille d'un booléen %d [o]", sizeof(bool)); 
+
+	//--définition d'un type enumération -> e_machineEtat -> locale --// 
+					  //ETAT1 = 0, ETAT2 = 20, ETAT3 = 21
+	enum e_machineEtat { AVANCE, RECULE = 20, TOURNE_G, TOURNE_D, ROTATION }; 
+
+	enum e_machineEtat robot = AVANCE; 
+
+	printf("\ntaille de l'enum robot %d [o]", sizeof(robot));
+
 	//--- Reel 
 	float varQ; 				// 4 octets	
 	double varR;				// 8 octets 
@@ -103,6 +118,8 @@ void main()
 	//--> printf 
 	printf("%f \r\n %f \n %f", perimetre1_m, perimetre2_m, perimetre3_m);
 	
+	robot = RECULE; 
+
 }
 
 
