@@ -1,6 +1,6 @@
-# PROG - Cours de programmation année 2025 - 2026
+# PROG - Cours de programmation année 2025 - 2026 -> V0.3
 ## Infos Pratique - Bonne pratique git
-###Créer un compte sur un serveur GIT => pour l'ES nous utiliserons <span sytle="color:#FF0000;">Github</span>
+### Créer un compte sur un serveur GIT => pour l'ES nous utiliserons <span sytle="color:#FF0000;">Github</span>
 	
 * => vous créez et gérez votre **propre dépôt** (local -> serveur)
 	
@@ -60,11 +60,11 @@
 ## Suivi des exercices 
 ---
 
-| Exercice \ Initial Etudiant | **[NAM]()** | **[CAH]()** | **[MBY]()** | **[LDE]()** | **[TDS]()** | **[DEA]()** | **[LMY]()** | **[VMD]()** | **[FOD]()** | **[SPY]()** | **[SSR]()** | **[NTN]()** | **[SVD]()** |
+| Exercice \ Initial Etudiant | **[NAM](https://github.com/Noe-Alam)** | **[CAH](https://github.com/christophe-Allen)** | **[MBY](https://github.com/mthbnny)** | **[LDE](https://github.com/LDE10)** | **[TDS](https://github.com/TimeDol)** | **[DEA](https://github.com/DEA-v1)** | **[LMY](https://github.com/Marmitte2)** | **[VMD](https://github.com/Valentin055)** | **[AOD](https://github.com/Alexandre-legrand281)** | **[SPY](https://github.com/SgtJams)** | **[SSR](https://github.com/norlag)** | **[NTN](https://github.com/NicoTf40)** | **[SVD](https://github.com/Samuel-Es)** |
 |:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
 | [Ex1]()  | NOK | NOK | NOK | NOK | NOK | NOK | NOK | NOK | NOK | NOK | NOK | NOK | NOK | 
 | [Ex2A]() | NOK | NOK| NOK| NOK | NOK | NOK | NOK | NOK | NOK | NOK | NOK | NOK | NOK | 
-| [Ex2B]   | NOK | NOK| NOK| NOK | NOK | NOK | NOK | NOK | NOK | NOK | NOK | NOK | NOK | 
+| [Ex2B]()   | NOK | NOK| NOK| NOK | NOK | NOK | NOK | NOK | NOK | NOK | NOK | NOK | NOK | 
 | [Ex2C]() | NOK | NOK| NOK| NOK | NOK | NOK | NOK | NOK | NOK | NOK | NOK | NOK | NOK | 
 | [Ex3]() | NOK | NOK| NOK| NOK | NOK | NOK | NOK | NOK | NOK | NOK | NOK | NOK | NOK | 
 | [Ex4]() | NOK | NOK| NOK| NOK | NOK | NOK | NOK | NOK | NOK | NOK | NOK | NOK | NOK | 
@@ -97,10 +97,10 @@
 * source à disposition : - 
 
 ### Groupe
-* Flow chart 			=> 	| verificateur =>  
-* Structogramme NSI		=> 		| verificateur =>  
-* Structogramme Jackson	=>  	| verificateur =>  
-* Pseudo-Code 			=>  	| verificateur => 
+* Flow chart 			=> NAM LDE AOD  	| 	verificateur => LMY VMD SVD NTN 
+* Structogramme NSI		=> CAH SPY TDS		| 	verificateur => SSR MBY DEA  ^25
+* Structogramme Jackson	=> LMY VMD SVD NTN	| 	verificateur => NAM LDE AOD 
+* Pseudo-Code 			=> SSR MBY DEA 		| 	verificateur => CAH SPY TDS
 
 ### Suivi projet
 * [Partie A](https://github.com/PBYetml/PROG_SLO1_24_25/tree/main/Exercice/Exo2) => réaliser un flow chart / pseudo code / structogramme : 
