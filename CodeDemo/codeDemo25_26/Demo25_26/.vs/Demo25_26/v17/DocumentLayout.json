@@ -7,12 +7,12 @@
       "RelativeMoniker": "D:0:0:{A6D6E69D-10BA-4E72-9B26-CCF6C630BDC2}|Demo25_26\\Demo25_26.vcxproj|solutionrelative:Demo25_26\\demo.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A6D6E69D-10BA-4E72-9B26-CCF6C630BDC2}|Demo25_26\\Demo25_26.vcxproj|C:\\PBY\\GITHUB\\PROG_DEMO_SLO25_26\\CodeDemo\\codeDemo25_26\\Demo25_26\\Demo25_26\\Conversion.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{A6D6E69D-10BA-4E72-9B26-CCF6C630BDC2}|Demo25_26\\Demo25_26.vcxproj|solutionrelative:Demo25_26\\Conversion.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{A6D6E69D-10BA-4E72-9B26-CCF6C630BDC2}|Demo25_26\\Demo25_26.vcxproj|C:\\PBY\\GITHUB\\PROG_DEMO_SLO25_26\\CodeDemo\\codeDemo25_26\\Demo25_26\\Demo25_26\\ConversionPerso.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{A6D6E69D-10BA-4E72-9B26-CCF6C630BDC2}|Demo25_26\\Demo25_26.vcxproj|solutionrelative:Demo25_26\\ConversionPerso.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A6D6E69D-10BA-4E72-9B26-CCF6C630BDC2}|Demo25_26\\Demo25_26.vcxproj|C:\\PBY\\GITHUB\\PROG_DEMO_SLO25_26\\CodeDemo\\codeDemo25_26\\Demo25_26\\Demo25_26\\Conversion.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A6D6E69D-10BA-4E72-9B26-CCF6C630BDC2}|Demo25_26\\Demo25_26.vcxproj|solutionrelative:Demo25_26\\Conversion.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     }
   ],
   "DocumentGroupContainers": [
@@ -26,26 +26,26 @@
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 1,
               "Title": "ConversionPerso.c",
               "DocumentMoniker": "C:\\PBY\\GITHUB\\PROG_DEMO_SLO25_26\\CodeDemo\\codeDemo25_26\\Demo25_26\\Demo25_26\\ConversionPerso.c",
               "RelativeDocumentMoniker": "Demo25_26\\ConversionPerso.c",
               "ToolTip": "C:\\PBY\\GITHUB\\PROG_DEMO_SLO25_26\\CodeDemo\\codeDemo25_26\\Demo25_26\\Demo25_26\\ConversionPerso.c",
               "RelativeToolTip": "Demo25_26\\ConversionPerso.c",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAcAAAACAAAAAAAAAA==",
+              "ViewState": "AgIAACoAAAAAAAAAAAAAAAcAAAACAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
               "WhenOpened": "2025-11-03T14:59:57.629Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "Conversion.h",
               "DocumentMoniker": "C:\\PBY\\GITHUB\\PROG_DEMO_SLO25_26\\CodeDemo\\codeDemo25_26\\Demo25_26\\Demo25_26\\Conversion.h",
               "RelativeDocumentMoniker": "Demo25_26\\Conversion.h",
               "ToolTip": "C:\\PBY\\GITHUB\\PROG_DEMO_SLO25_26\\CodeDemo\\codeDemo25_26\\Demo25_26\\Demo25_26\\Conversion.h",
               "RelativeToolTip": "Demo25_26\\Conversion.h",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAUAAAAAAAAAA==",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAAAA8AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
               "WhenOpened": "2025-11-03T14:51:18.349Z",
               "EditorCaption": ""
@@ -58,7 +58,7 @@
               "RelativeDocumentMoniker": "Demo25_26\\demo.c",
               "ToolTip": "C:\\PBY\\GITHUB\\PROG_DEMO_SLO25_26\\CodeDemo\\codeDemo25_26\\Demo25_26\\Demo25_26\\demo.c",
               "RelativeToolTip": "Demo25_26\\demo.c",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAACAAAAAAAAAA==",
+              "ViewState": "AgIAAFcAAAAAAAAAAAAjwFMAAAA1AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
               "WhenOpened": "2025-10-03T08:53:11.462Z",
               "EditorCaption": ""
