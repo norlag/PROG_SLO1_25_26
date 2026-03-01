@@ -1,0 +1,237 @@
+/* =========================================================================
+   ======================= GUIDE ULTIME PRINTF =============================
+   =========================================================================
+   
+   Règle générale : printf("%[flags][width][.precision][length]specifier", var);
+
+   1. NOMBRES ENTIERS (Signés et Non-Signés)
+   -------------------------------------------------------------------------
+   %d ou %i   : int (entier standard signé).
+   %u         : unsigned int (entier standard non-signé).
+   %hd        : short int (entier court).
+   %hu        : unsigned short int.
+   %ld        : long int.
+   %lu        : unsigned long int.
+   %lld       : long long int.
+   %llu       : unsigned long long int.
+
+   2. BASES (Hexadécimal et Octal)
+   -------------------------------------------------------------------------
+   %x         : Hexadécimal (lettres minuscules, ex: 1a).
+   %X         : Hexadécimal (lettres majuscules, ex: 1A).
+   %o         : Octal (base 8).
+   
+   EDGE CASES HEXA :
+   %#x        : Ajoute le préfixe "0x" (ex: 0x1a).
+   %#X        : Ajoute le préfixe "0X" (ex: 0X1A).
+   %02X       : Affiche sur 2 caractères en ajoutant un zéro devant si besoin 
+                (Très utilisé pour afficher des octets/bytes, ex: 0A, 0F).
+   %04X       : Affiche sur 4 caractères (utile pour un short int).
+
+   3. NOMBRES A VIRGULE FLOTTANTE (Float et Double)
+   -------------------------------------------------------------------------
+   %f         : float ou double (affichage standard, 6 chiffres après la virgule).
+   %lf        : double (historiquement pour scanf, mais accepté par printf).
+   %e ou %E   : Notation scientifique (ex: 3.141593e+00).
+   %g ou %G   : Le plus court entre %f et %e (enlève les zéros inutiles).
+   
+   EDGE CASES FLOAT/DOUBLE :
+   %.2f       : Arrondi à 2 chiffres après la virgule.
+   %8.2f      : Prend 8 caractères de large au total, dont 2 après la virgule 
+                (alignement à droite).
+   %+.2f      : Force l'affichage du signe (+ ou -).
+
+   4. CARACTERES, CHAINES ET POINTEURS
+   -------------------------------------------------------------------------
+   %c         : Un seul caractère (char).
+   %s         : Chaîne de caractères (char* ou tableau de char terminé par \0).
+   %p         : Adresse mémoire (pointeur), affiché en hexadécimal.
+   %%         : Affiche un simple caractère '%'.
+
+   EDGE CASES STRINGS :
+   %.5s       : Tronque la chaîne et n'affiche que les 5 premiers caractères.
+   %-10s      : Aligne le texte à gauche sur un espace de 10 caractères.
+========================================================================= */
+
+#include <stdio.h>
+#include <math.h> // Fournit floor() et ceil() [cite: 40, 41]
+
+/* =========================================================================
+   1. STRUCTURES ET TYPEDEF (Ex13, Ex14)
+   ========================================================================= */
+// Déclaration classique d'une structure[cite: 318, 319].
+typedef struct {
+    int nombre;
+    short int unites;
+    short int dizaines;
+    short int centaines;
+} S_TestB;
+
+
+/* =========================================================================
+   2. UNIONS (Ex15) : Deux vues sur la même mémoire
+   ========================================================================= */
+// Une union partage la même adresse mémoire pour tous ses champs[cite: 671, 672].
+// Ici, on peut voir la variable soit comme un double de 64 bits, 
+// soit comme un tableau de 8 octets de 8 bits[cite: 672].
+typedef union {
+    double valeurDouble;
+    unsigned char tabOctets[8];
+} U_MemoireDouble;
+
+
+/* =========================================================================
+   3. CHAMPS DE BITS DANS UNE UNION (Ex16)
+   ========================================================================= */
+// Compresser des données dans un espace précis[cite: 740, 741].
+typedef union {
+    unsigned short DateCodee; // Vue globale sur 16 bits [cite: 750]
+    
+    // Vue détaillée utilisant les champs de bits (bit-fields) [cite: 741, 750]
+    struct {
+        unsigned short jour  : 5; // Utilise 5 bits
+        unsigned short mois  : 4; // Utilise 4 bits
+        unsigned short annee : 7; // Utilise 7 bits
+    } champs; 
+} U_DateCompress;
+
+
+/* =========================================================================
+   4. STRUCTURES COMPLEXES ET ALIGNEMENT MEMOIRE (Ex17)
+   ========================================================================= */
+// Le compilateur ajoute parfois des octets "vides" (padding) pour aligner 
+// les variables en mémoire[cite: 890, 891].
+// #pragma pack(push, 1) force le compilateur à coller les variables 
+// (packing de 1 octet) pour éviter de perdre de la place[cite: 897, 899].
+
+#pragma pack(push, 1) // Début du compactage [cite: 899]
+typedef struct {
+    unsigned char STX;       // 1 octet
+    unsigned int Code;       // 4 octets
+    unsigned int Datas;      // 4 octets
+    unsigned short Crc;      // 2 octets
+} S_FrameCompact;            // Total théorique = 11 octets
+#pragma pack(pop)     // Fin du compactage, retour à la normale [cite: 902]
+
+
+/* =========================================================================
+   PROTOTYPES DES FONCTIONS
+   ========================================================================= */
+double Ftesta(double val, double *partFract);
+void ItererPointeur(int taille, double *ptrDebut);
+void ModifierStructure(S_TestB *pData);
+unsigned short ZipDate(unsigned char jour, unsigned char mois, unsigned short an);
+
+/* =========================================================================
+   PROGRAMME PRINCIPAL (MAIN)
+   ========================================================================= */
+int main() {
+    printf("--- REVISION C : EXAMEN ---\n\n");
+
+    /* --- EX10 : POINTEURS ET FONCTIONS --- */
+    printf("1. POINTEURS ET FONCTIONS (Passage par reference)\n");
+    double val = -7.431;
+    double fraction; // On passera l'adresse de cette variable
+    // Appel : On utilise & pour passer l'adresse de 'fraction'
+    double entier = Ftesta(val, &fraction); 
+    printf("Valeur: %g | Entier: %g | Fraction: %g\n\n", val, entier, fraction);
+
+    /* --- EX12 : TABLEAUX ET POINTEURS --- */
+    printf("2. TABLEAUX ET POINTEURS (Iteration sans indice)\n");
+    double TableA[3] = {10.00, 10.01, 10.02}; // Déclaration tableau [cite: 127, 128]
+    // Le nom d'un tableau ('TableA') est un pointeur vers son 1er élément
+    ItererPointeur(3, TableA); 
+    
+    // Matrices (Tableaux 2D) [cite: 163, 164, 417]
+    char MatriceB[2][4] = {
+        {0, 0, 0, 0},
+        {0, 0, 0, 1}
+    }; // Attention à l'initialisation des lignes/colonnes [cite: 167, 420]
+    printf("\n");
+
+    /* --- EX13 : POINTEURS DE STRUCTURES --- */
+    printf("3. STRUCTURES ET POINTEURS (Operateur ->)\n");
+    S_TestB dataEx13; // Déclaration d'une variable structure [cite: 327]
+    dataEx13.nombre = 671; // On utilise le point (.) sur une variable normale
+    
+    ModifierStructure(&dataEx13); // Passage par adresse [cite: 322]
+    printf("Nombre: %d => Centaines: %d, Dizaines: %d, Unites: %d\n\n", 
+           dataEx13.nombre, dataEx13.centaines, dataEx13.dizaines, dataEx13.unites);
+
+    /* --- EX15 : UNIONS --- */
+    printf("4. UNIONS (Affichage de la memoire en Hexa)\n");
+    U_MemoireDouble memInfo;
+    memInfo.valeurDouble = 100.3; // On écrit dans le format double [cite: 663]
+    printf("Double = %f | Hexa = ", memInfo.valeurDouble);
+    // On lit la MEME mémoire via le tableau d'octets
+    for(int i = 7; i >= 0; i--) {
+        printf("%02X ", memInfo.tabOctets[i]); // %02X affiche l'octet sur 2 caractères hexa [cite: 657, 682]
+    }
+    printf("\n\n");
+
+    /* --- EX16 : CHAMPS DE BITS --- */
+    printf("5. CHAMPS DE BITS (Compression de donnees)\n");
+    unsigned short resZip = ZipDate(18, 2, 2015);
+    // 0x9141 = 18 2 2015 [cite: 766]
+    printf("Jour: 18, Mois: 2, Annee: 2015 => Code compresse : %#X\n\n", resZip); 
+
+    /* --- EX17 : PRAGMA PACK --- */
+    printf("6. ALIGNEMENT ET COMPACTAGE (#pragma pack)\n");
+    printf("Taille S_FrameCompact avec #pragma pack = %zu octets\n", sizeof(S_FrameCompact));
+    // Sans #pragma pack, la taille aurait pu être de 12 ou 16 octets à cause 
+    // des règles d'alignement du compilateur[cite: 890, 891].
+
+    return 0;
+}
+
+/* =========================================================================
+   IMPLEMENTATION DES FONCTIONS
+   ========================================================================= */
+
+// EX10: Utilisation de pointeurs pour simuler un double retour [cite: 39]
+double Ftesta(double val, double *partFract) {
+    double pInt;
+    if (val >= 0) {
+        pInt = floor(val); // Calcule le plus grand entier <= x [cite: 41]
+    } else {
+        pInt = ceil(val);  // Calcule le plus petit entier >= x [cite: 41]
+    }
+    
+    // *partFract permet de modifier la variable originale à distance
+    *partFract = val - pInt; 
+    return pInt;
+}
+
+// EX12: Itération dans un tableau via l'arithmétique des pointeurs [cite: 136]
+void ItererPointeur(int taille, double *ptrDebut) {
+    for (int i = 0; i < taille; i++) {
+        // %p affiche l'adresse. *(ptrDebut) déréférence pour lire la valeur.
+        // On incrémente le pointeur (ptrDebut++) pour passer à la case mémoire suivante sans utiliser ptrDebut[i] [cite: 136]
+        printf("Indice = %d, Adresse = %p, Valeur = %.2f\n", i, (void*)ptrDebut, *ptrDebut);
+        ptrDebut++; 
+    }
+}
+
+// EX13: Accéder aux champs d'une structure via un pointeur [cite: 318, 332]
+void ModifierStructure(S_TestB *pData) {
+    // TRES IMPORTANT: Comme pData est un pointeur (*), 
+    // on DOIT utiliser la flèche (->) au lieu du point (.)
+    int temp = pData->nombre; 
+    pData->centaines = temp / 100;
+    temp = temp % 100;
+    pData->dizaines = temp / 10;
+    pData->unites = temp % 10;
+}
+
+// EX16: Stocker des infos compressées grâce à une union et bitfields [cite: 738, 739, 740]
+unsigned short ZipDate(unsigned char jour, unsigned char mois, unsigned short an) {
+    U_DateCompress Tmp; // Union locale [cite: 758]
+    
+    // On remplit les bits spécifiques via la vue structure
+    Tmp.champs.jour = jour;
+    Tmp.champs.mois = mois;
+    Tmp.champs.annee = an - 1950; // Année relative [cite: 742]
+    
+    // On retourne l'ensemble du bloc mémoire via la vue 'short' de 16 bits [cite: 744, 750]
+    return Tmp.DateCodee;
+}

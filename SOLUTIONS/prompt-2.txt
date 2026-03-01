@@ -1,0 +1,155 @@
+/* =========================================================================
+   =============== CHEAT SHEET AVANCÉ : POINTEURS, TYPEDEF =================
+   ==================== STRUCTURES ET PIÈGES DU C ==========================
+   ========================================================================= */
+
+#include <stdio.h>
+#include <stdlib.h>
+
+/* =========================================================================
+   1. TYPEDEF : SIMPLIFIER LA VIE (ET LE CODE)
+   ========================================================================= 
+   Le mot-clé 'typedef' ne crée pas un nouveau type, il crée un ALIAS (un 
+   surnom) pour un type existant. C'est crucial pour la lisibilité. */
+
+// Sans typedef : il faut toujours écrire "struct Point"
+struct Point { int x; int y; };
+struct Point p1; 
+
+// Avec typedef : on fusionne la définition et l'alias
+typedef struct { 
+    int x; 
+    int y; 
+} S_Point; // S_Point est maintenant un type à part entière
+S_Point p2;
+
+// TYPEDEF AVANCÉ : Les pointeurs de fonctions (Très fréquent aux examens)
+// Crée un type "FonctionPtr" qui est un pointeur vers une fonction 
+// prenant deux int et retournant un int.
+typedef int (*FonctionPtr)(int, int);
+
+
+/* =========================================================================
+   2. TAILLE DES POINTEURS (L'illusion de la taille)
+   ========================================================================= 
+   PIÈGE D'EXAMEN : "Quelle est la taille de double *p par rapport à char *c ?"
+   RÉPONSE : ELLES SONT IDENTIQUES !
+   
+   Un pointeur ne stocke qu'une adresse mémoire. L'adresse a la même taille 
+   peu importe ce qu'il y a au bout.
+   - Sur un système 32 bits : sizeof(pointeur) = 4 octets.
+   - Sur un système 64 bits : sizeof(pointeur) = 8 octets.
+*/
+void taillesPointeurs() {
+    char *pChar;
+    double *pDouble;
+    S_Point *pStruct;
+    
+    // Tous ces sizeof() donneront 8 (sur PC moderne 64 bits) ou 4 (sur 32 bits)
+    // sizeof(pChar) == sizeof(pDouble) == sizeof(pStruct)
+    
+    // En revanche, la taille de la CIBLE est différente :
+    // sizeof(*pChar) = 1, sizeof(*pDouble) = 8, sizeof(*pStruct) = 8
+}
+
+/* =========================================================================
+   3. ARITHMÉTIQUE ET INCRÉMENTATION DES POINTEURS
+   ========================================================================= 
+   Quand on fait ptr + 1, on n'ajoute pas "1" à l'adresse mémoire. 
+   On ajoute "1 fois la taille du type pointé". */
+
+void arithmetiquePointeurs() {
+    int tab[5] = {10, 20, 30, 40, 50};
+    int *ptr = tab; // ptr pointe sur tab[0] (ex: adresse 1000)
+
+    ptr++; // ptr pointe maintenant sur tab[1] (adresse 1004, car int = 4 octets)
+    
+    // --- LES PIÈGES D'INCRÉMENTATION ---
+    // Les opérateurs * et ++ ont des priorités qui rendent fou.
+    
+    int val1 = *ptr++;   
+    // 1. Lit la valeur actuelle pointée par ptr (20)
+    // 2. Met cette valeur dans val1
+    // 3. Incrémente le pointeur (ptr pointe sur tab[2])
+    
+    int val2 = (*ptr)++; 
+    // 1. Lit la valeur actuelle pointée (30)
+    // 2. Met 30 dans val2
+    // 3. Incrémente LA VALEUR dans le tableau (tab[2] devient 31 !)
+    // Le pointeur ne bouge pas.
+    
+    int val3 = *++ptr;   
+    // 1. Incrémente le pointeur d'abord (ptr pointe sur tab[3])
+    // 2. Lit la valeur (40) et la met dans val3
+}
+
+
+/* =========================================================================
+   4. STRUCTURES GLOBALES vs LOCALES (La gestion de la RAM)
+   ========================================================================= */
+
+// STRUCTURE GLOBALE : Déclarée en dehors de toute fonction.
+// - Stockée dans le segment BSS/Data de la mémoire.
+// - MAGIE : Tous ses champs sont AUTOMATIQUEMENT initialisés à 0 (ou NULL).
+// - Durée de vie : Tout le temps de l'exécution du programme.
+S_Point pointGlobal; 
+
+void testPortee() {
+    // STRUCTURE LOCALE : Déclarée dans une fonction.
+    // - Stockée dans la PILE (Stack).
+    // - PIÈGE : Ses champs contiennent des "valeurs poubelles" (garbage data)
+    //   tant que tu ne les as pas initialisés manuellement.
+    // - Durée de vie : Détruite dès qu'on sort de la fonction (accolade fermante).
+    S_Point pointLocal; 
+    
+    // Si on fait printf("%d", pointGlobal.x); -> Affiche 0
+    // Si on fait printf("%d", pointLocal.x);  -> Comportement indéfini (ex: 419834)
+}
+
+
+/* =========================================================================
+   5. LES CHOSES AUXQUELLES ON NE PENSE PAS (Edge Cases Suprêmes)
+   ========================================================================= */
+
+void edgeCases() {
+    // A. TABLEAU VS POINTEUR (Le piège du sizeof)
+    int tableau[10];
+    int *pointeur = tableau;
+    
+    // sizeof(tableau)  = 40 (10 cases * 4 octets). Le compilo connait la taille.
+    // sizeof(pointeur) = 8  (taille de l'adresse). Le pointeur a oublié la taille !
+    // Conséquence : Ne jamais utiliser sizeof() sur un tableau passé en 
+    // paramètre de fonction (il a "decay" en pointeur).
+
+    // B. LES POINTEURS CONSTANTS (Lecture de droite à gauche)
+    int a = 5, b = 10;
+    
+    // 1. Pointeur sur un entier constant (la valeur ciblée ne peut pas changer)
+    const int *ptr1 = &a; 
+    // *ptr1 = 6; // ERREUR !
+    ptr1 = &b;    // OK, on peut changer la cible du pointeur.
+
+    // 2. Pointeur constant sur un entier (l'adresse ne peut pas changer)
+    int * const ptr2 = &a;
+    *ptr2 = 6;    // OK, on peut changer la valeur pointée.
+    // ptr2 = &b; // ERREUR ! Le pointeur est scellé sur 'a'.
+    
+    // C. POINTEUR DANS UNE STRUCTURE VERS ELLE-MÊME (Listes chaînées)
+    // On ne peut pas utiliser le typedef à l'intérieur de sa propre définition,
+    // il faut utiliser le mot-clé struct originel !
+    typedef struct Noeud {
+        int valeur;
+        struct Noeud *suivant; // DOIT utiliser "struct Noeud*" et pas "S_Noeud*"
+    } S_Noeud;
+
+    // D. DANGER ABSOLU : RETOURNER L'ADRESSE D'UNE VARIABLE LOCALE
+    // Ne jamais faire ça :
+    // int* erreur() { int x = 5; return &x; } 
+    // La variable 'x' est détruite à la fin de la fonction, le pointeur 
+    // pointe sur une zone mémoire morte (Dangling pointer).
+}
+
+int main() {
+    // Cette fonction main ne sert qu'à compiler le cheat sheet si besoin.
+    return 0;
+}
